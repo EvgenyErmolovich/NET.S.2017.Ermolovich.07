@@ -11,45 +11,21 @@ namespace LogicBook
 		/// </summary>
 		private List<Book> bookList;
 		/// <summary>
-		/// Gets or sets the book list.
-		/// </summary>
-		/// <value>The book list.</value>
-		private List<Book> BookList 
-		{ 
-			get { return bookList; }
-			set 
-			{
-				if (value == null) throw new ArgumentNullException($"{nameof(value)} is invalid!");
-				else
-				{
-					bookList = new List<Book>();
-					foreach (var book in value)
-					AddBook(book);
-				}
-			}
-		}
-		/// <summary>
 		/// Initializes a new instance of the <see cref="T:LogicBook.BookListService"/> class.
 		/// </summary>
 		public BookListService()
 		{
-			BookList = new List<Book>();
+			bookList = new List<Book>();
 		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:LogicBook.BookListService"/> class.
 		/// </summary>
 		/// <param name="bookList">Book list.</param>
-		public BookListService(List<Book> bookList)
+		public BookListService(IEnumerable<Book> bookList):this()
 		{
-			BookList = bookList;
-		}
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:LogicBook.BookListService"/> class.
-		/// </summary>
-		/// <param name="storage">Storage.</param>
-		public BookListService(IBookStorage storage)
-		{
-			LoadFromStorage(storage);
+			if (bookList == null) throw new ArgumentNullException($"{nameof(bookList)} is invalid!");
+			foreach (var book in bookList)
+				AddBook(book);
 		}
 		/// <summary>
 		/// Adds the book.
@@ -58,7 +34,7 @@ namespace LogicBook
 		public void AddBook(Book book)
 		{
 			if (book == null) throw new ArgumentNullException($"{nameof(book)} is invalid!");
-			if (BookList.Contains(book)) throw new ArgumentException($"{nameof(book)} exist!");
+			if (bookList.Contains(book)) throw new ArgumentException($"{nameof(book)} exist!");
 			bookList.Add(book);
 		}
 		/// <summary>
@@ -67,8 +43,8 @@ namespace LogicBook
 		/// <param name="book">Book.</param>
 		public void RemoveBook(Book book)
 		{
-			if (!BookList.Contains(book)) throw new ArgumentException($"{nameof(book)} does not exist!");
-			BookList.Remove(book);
+			if (!bookList.Contains(book)) throw new ArgumentException($"{nameof(book)} does not exist!");
+			bookList.Remove(book);
 		}
 		/// <summary>
 		/// Finds the book by tag.
@@ -77,7 +53,7 @@ namespace LogicBook
 		/// <param name="finder">Finder.</param>
 		public Book FindBookByTag(IFinder finder)
 		{
-			foreach (var book in BookList)
+			foreach (var book in bookList)
 			{
 				if (finder.Find(book)) return book;
 			}
@@ -87,28 +63,9 @@ namespace LogicBook
 		/// Sorts the books by tag.
 		/// </summary>
 		/// <param name="comparer">Comparer.</param>
-		public void SortBooksByTag(IBookComparer comparer)
+		public void SortBooksByTag(IComparer<Book> comparer)
 		{
-			Book temp = null;
-			Book[] array = bookList.ToArray();
-            for (int i = 0; i < array.Length; i++)
-            {
-                for (int j = 0; j<array.Length-1; j++)
-                {
-                    if(comparer.Compare(array[j], array[j + 1]) > 0)
-                    {
-                        temp = array[j];
-                        array[j] = array[j + 1];
-                        array[j + 1] = temp;
-                    }
-                }
-            }
-			bookList.Clear();
-			for (int i = 0; i < array.Length; i++)
-			{
-
-				this.AddBook(array[i]);
-			}
+			bookList.Sort(comparer);
 		}
 		/// <summary>
 		/// Saves to storage.
@@ -116,7 +73,8 @@ namespace LogicBook
 		/// <param name="storage">Storage.</param>
 		public void SaveToStorage(IBookStorage storage)
 		{
-			storage.WriteToStorage(BookList);
+			if (storage == null) throw new ArgumentNullException($"{nameof(storage)} is invalid!");
+			storage.WriteToStorage(bookList);
 		}
 		/// <summary>
 		/// Loads from storage.
@@ -124,13 +82,14 @@ namespace LogicBook
 		/// <param name="storage">Storage.</param>
 		public void LoadFromStorage(IBookStorage storage)
 		{
-			BookList = storage.ReadFromStorage();
+			if (storage == null) throw new ArgumentNullException($"{nameof(storage)} is invalid!");
+			bookList = storage.ReadFromStorage();
 		}
 		/// <summary>
 		/// Gets the <see cref="T:LogicBook.BookListService"/> with the specified i.
 		/// </summary>
 		/// <param name="i">The index.</param>
-		public Book this[int i] => BookList[i];
+		public Book this[int i] => bookList[i];
 		/// <summary>
 		/// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:LogicBook.BookListService"/>.
 		/// </summary>
@@ -139,7 +98,7 @@ namespace LogicBook
 		{
 			StringBuilder str = new StringBuilder();
 			str.Append("List of books:\n");
-			foreach (Book book in BookList)
+			foreach (Book book in bookList)
 			{
 				str.Append(book);
 				str.Append('\n');

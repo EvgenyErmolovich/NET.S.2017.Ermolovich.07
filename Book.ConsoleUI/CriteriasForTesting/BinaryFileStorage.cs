@@ -28,7 +28,12 @@ namespace LogicBook.ConsoleUI
 			{
 				while (reader.PeekChar() > -1)
 				{
-					bookList.Add(new Book(reader.ReadString(), reader.ReadString(), reader.ReadInt32(), reader.ReadInt32()));
+					Book temp = new Book();
+					temp.Name = reader.ReadString();
+					temp.Author = reader.ReadString();
+					temp.Year = reader.ReadInt32();
+					temp.Pages = reader.ReadInt32();
+					bookList.Add(temp);
 				}
 			}
 			return bookList;

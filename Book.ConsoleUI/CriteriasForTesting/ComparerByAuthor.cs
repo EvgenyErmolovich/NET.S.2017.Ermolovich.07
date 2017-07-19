@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace LogicBook.ConsoleUI
 {
-	public class ComparerByAuthor : IBookComparer
+	public class ComparerByAuthor : IComparer<Book>
 	{
 		public int Compare(Book lhs, Book rhs)
 		{

@@ -1,12 +1,28 @@
 ﻿using System;
 namespace LogicBook
 {
-	public class Book : IEquatable<Book>
+	public class Book : IEquatable<Book>, IComparable, IComparable<Book>
 	{
+		private static int minYear = 1000;
+		private static int maxYear = DateTime.Today.Year;
+		private static int minPages = 1;
+		private static int maxPages = 1000;
 		/// <summary>
 		/// The name.
 		/// </summary>
 		private string name;
+		/// <summary>
+		/// The author.
+		/// </summary>
+		private string author;
+		/// <summary>
+		/// The year.
+		/// </summary>
+		private int year;
+		/// <summary>
+		/// The pages.
+		/// </summary>
+		private int pages;
 		/// <summary>
 		/// Gets or sets the name.
 		/// </summary>
@@ -21,10 +37,6 @@ namespace LogicBook
 			}
 		}
 		/// <summary>
-		/// The author.
-		/// </summary>
-		private string author;
-		/// <summary>
 		/// Gets or sets the author.
 		/// </summary>
 		/// <value>The author.</value>
@@ -37,15 +49,6 @@ namespace LogicBook
 				author = value;
 			}
 		}
-		/// <summary>
-		/// The year.
-		/// </summary>
-		private int year;
-		/// <summary>
-		/// The minimum year.
-		/// </summary>
-		private static int minYear = 1000;
-		private static int maxYear = DateTime.Today.Year;
 		/// <summary>
 		/// Gets or sets the year.
 		/// </summary>
@@ -61,12 +64,6 @@ namespace LogicBook
 
 		}
 		/// <summary>
-		/// The pages.
-		/// </summary>
-		private int pages;
-		private static int minPages = 1;
-		private static int maxPages = 1000;
-		/// <summary>
 		/// Gets or sets the pages.
 		/// </summary>
 		/// <value>The pages.</value>
@@ -80,43 +77,43 @@ namespace LogicBook
 			}
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:LogicBook.Book"/> class.
+		/// Compares to.
 		/// </summary>
-		/// <param name="name">Name.</param>
-		/// <param name="author">Author.</param>
-		/// <param name="year">Year.</param>
-		/// <param name="pages">Pages.</param>
-		public Book(string name, string author, int year, int pages)
-		{
-			Name = name;
-			Author = author;
-			Year = year;
-			Pages = pages;
-		}
+		/// <returns>The to.</returns>
+		/// <param name="other">Other.</param>
+		public int CompareTo(Book other) => other.Pages - Pages;
 		/// <summary>
-		/// Compare the specified lhs, rhs and comparer.
+		/// Compares to.
 		/// </summary>
-		/// <returns>The compare.</returns>
-		/// <param name="lhs">Lhs.</param>
-		/// <param name="rhs">Rhs.</param>
-		/// <param name="comparer">Comparer.</param>
-		public static int Compare(Book lhs, Book rhs, IBookComparer comparer) => comparer.Compare(lhs, rhs);
+		/// <returns>The to.</returns>
+		/// <param name="obj">Object.</param>
+		public int CompareTo(object obj)
+		{
+			if ((ReferenceEquals(obj, null)) || typeof(Book) == obj.GetType()) throw new ArgumentNullException($"{nameof(obj)} is invalid!");
+			return this.CompareTo(obj as Book);
+		}
 		/// <summary>
 		/// Determines whether the specified <see cref="LogicBook.Book"/> is equal to the current <see cref="T:LogicBook.Book"/>.
 		/// </summary>
 		/// <param name="other">The <see cref="LogicBook.Book"/> to compare with the current <see cref="T:LogicBook.Book"/>.</param>
 		/// <returns><c>true</c> if the specified <see cref="LogicBook.Book"/> is equal to the current <see cref="T:LogicBook.Book"/>;
 		/// otherwise, <c>false</c>.</returns>
-		public bool Equals(Book other) => (!ReferenceEquals(other, null))? 
-		((Name == other.Name) && (Author == other.Author) && (Year == other.Year) && (Pages == other.Pages)) : false;
+		public bool Equals(Book other)
+		{
+			if (ReferenceEquals(other, null)) return false;
+			return ((Name == other.Name) && (Author == other.Author) && (Year == other.Year) && (Pages == other.Pages));
+		}
 		/// <summary>
 		/// Determines whether the specified <see cref="object"/> is equal to the current <see cref="T:LogicBook.Book"/>.
 		/// </summary>
 		/// <param name="obj">The <see cref="object"/> to compare with the current <see cref="T:LogicBook.Book"/>.</param>
 		/// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current <see cref="T:LogicBook.Book"/>;
 		/// otherwise, <c>false</c>.</returns>
-		public override bool Equals(object obj) => (!(ReferenceEquals(obj, null)) || typeof(Book) == obj.GetType())?
-		Equals(obj as Book) : false;
+		public override bool Equals(object obj)
+		{
+			if ((ReferenceEquals(obj, null)) || typeof(Book) == obj.GetType()) return false;
+			return Equals(obj as Book);
+		}
 		/// <summary>
 		/// Serves as a hash function for a <see cref="T:LogicBook.Book"/> object.
 		/// </summary>
