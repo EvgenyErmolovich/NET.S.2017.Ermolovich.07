@@ -35,6 +35,8 @@
     <Compile Include="BookInterfaces\IBookStorage.cs" />
     <Compile Include="BookInterfaces\IBookFinder.cs" />
     <Compile Include="BookServices\BookListService.cs" />
+    <Compile Include="BookInterfaces\ILogService.cs" />
+    <Compile Include="BookServices\NLogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Book\" />
