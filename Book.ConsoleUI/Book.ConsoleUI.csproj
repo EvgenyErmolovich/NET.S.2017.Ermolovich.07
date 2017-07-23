@@ -35,6 +35,8 @@
     <Compile Include="CriteriasForTesting\ComparerByAuthor.cs" />
     <Compile Include="CriteriasForTesting\FinderByAuthor.cs" />
     <Compile Include="Test\Book.Tests.cs" />
+    <Compile Include="CriteriasForTesting\BinarySerializibleStorage.cs" />
+    <Compile Include="CriteriasForTesting\XMLSerializibleStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LogicBook\LogicBook.csproj">

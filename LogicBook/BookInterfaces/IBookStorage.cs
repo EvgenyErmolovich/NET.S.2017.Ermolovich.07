@@ -4,7 +4,7 @@ namespace LogicBook
 {
 	public interface IBookStorage
 	{
-		List<Book> ReadFromStorage();
-		void WriteToStorage(List<Book> bookList); 
+		IEnumerable<Book> ReadFromStorage();
+		void WriteToStorage(IEnumerable<Book> bookList); 
 	}
 }

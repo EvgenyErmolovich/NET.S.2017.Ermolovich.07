@@ -1,5 +1,5 @@
 ﻿using System;
-using NLog;
+//using NLog;
 
 namespace LogicBook
 {

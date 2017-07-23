@@ -83,7 +83,7 @@ namespace LogicBook
 		public void LoadFromStorage(IBookStorage storage)
 		{
 			if (storage == null) throw new ArgumentNullException($"{nameof(storage)} is invalid!");
-			bookList = storage.ReadFromStorage();
+			bookList = new List<Book>(storage.ReadFromStorage());
 		}
 		/// <summary>
 		/// Gets the <see cref="T:LogicBook.BookListService"/> with the specified i.

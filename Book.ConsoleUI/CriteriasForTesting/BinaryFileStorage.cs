@@ -21,7 +21,7 @@ namespace LogicBook.ConsoleUI
 			FileName = fileName;
 		}
 
-		public List<Book> ReadFromStorage()
+		public IEnumerable<Book> ReadFromStorage()
 		{
 			List<Book> bookList = new List<Book>();
 			using (BinaryReader reader = new BinaryReader(File.Open(FileName, FileMode.Open)))
@@ -39,7 +39,7 @@ namespace LogicBook.ConsoleUI
 			return bookList;
 		}
 
-		public void WriteToStorage(List<Book> bookList)
+		public void WriteToStorage(IEnumerable<Book> bookList)
 		{
 			if (ReferenceEquals(bookList, null)) throw new ArgumentNullException($"{nameof(bookList)} is invalid!");
 
