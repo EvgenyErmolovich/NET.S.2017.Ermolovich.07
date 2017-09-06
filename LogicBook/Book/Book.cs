@@ -1,6 +1,8 @@
 ﻿using System;
 namespace LogicBook
+
 {
+	[Serializable]
 	public class Book : IEquatable<Book>, IComparable, IComparable<Book>
 	{
 		private static int minYear = 1000;

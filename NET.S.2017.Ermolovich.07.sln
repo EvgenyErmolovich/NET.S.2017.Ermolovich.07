@@ -5,6 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBook", "LogicBook\Logi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book.ConsoleUI", "Book.ConsoleUI\Book.ConsoleUI.csproj", "{9D40B0DC-8E29-4AE9-A5D6-E6BF70E423E3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60DB92C9-EA73-40A7-AC28-9F2A9EA46F27}"
+	ProjectSection(SolutionItems) = preProject
+		NET.S.2017.Ermolovich.07.sln = NET.S.2017.Ermolovich.07.sln
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
